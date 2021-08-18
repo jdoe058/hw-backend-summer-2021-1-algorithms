@@ -1,4 +1,5 @@
 from typing import Any
+from collections import deque
 
 __all__ = (
     'Node',
@@ -39,4 +40,14 @@ class Graph:
         return result
 
     def bfs(self) -> list[Node]:
-        raise NotImplementedError
+        result = []
+        q = deque()
+        q.append(self._root)
+        while len(q):
+            tmp = q.popleft()
+            if not (tmp in result):
+                result.append(tmp)
+                for t in tmp.outbound:
+                    q.append(t)
+
+        return result
